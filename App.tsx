@@ -1,6 +1,12 @@
 import { NewAppScreen } from '@react-native/new-app-screen';
 import { useEffect, useState } from 'react';
-import { StatusBar, StyleSheet, Text, useColorScheme, View } from 'react-native';
+import {
+  StatusBar,
+  StyleSheet,
+  Text,
+  useColorScheme,
+  View,
+} from 'react-native';
 import {
   SafeAreaProvider,
   SafeAreaView,
@@ -10,7 +16,7 @@ import WebView from 'react-native-webview';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
-   const [data, setData] = useState(null);
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -38,32 +44,46 @@ function App() {
   }, []);
 
   useEffect(() => {
-  const testApis = async () => {
-    try {
-      const [posts, users, comments] = await Promise.all([
-        fetch('https://jsonplaceholder.typicode.com/posts').then(r => r.json()),
-        fetch('https://jsonplaceholder.typicode.com/users').then(r => r.json()),
-        fetch('https://jsonplaceholder.typicode.com/comments').then(r =>
-          r.json(),
-        ),
-      ]);
+    const testApis = async () => {
+      try {
+        const [posts, users, comments] = await Promise.all([
+          fetch('https://jsonplaceholder.typicode.com/posts').then(r =>
+            r.json(),
+          ),
+          fetch('https://jsonplaceholder.typicode.com/users').then(r =>
+            r.json(),
+          ),
+          fetch('https://jsonplaceholder.typicode.com/comments').then(r =>
+            r.json(),
+          ),
+        ]);
 
-      console.log('Posts:', posts);
-      console.log('Users:', users);
-      console.log('Comments:', comments);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+        console.log('Posts:', posts);
+        console.log('Users:', users);
+        console.log('Comments:', comments);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-  testApis();
-}, []);
+    testApis();
+  }, []);
 
   return (
     <SafeAreaProvider>
       {/* <SafeAreaView> */}
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
+      {/* <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} /> */}
+      {/* <AppWeb /> */}
+      <WebView
+        // source={{uri: 'http://192.168.3.127:3000'}} // aashish ip
+        // source={{uri: 'https://www.joinether.in/'}}
+        source={{ uri: 'http://192.168.3.66:5183/' }} // sanjeev ip
+        style={{ flex: 1, backgroundColor: 'green' }}
+        onMessage={event => {
+          const data = JSON.parse(event.nativeEvent.data);
+          console.log('WEBVIEW EVENT =>', data);
+        }}
+      />
       {/* <Text>HAjasnjnsa</Text> */}
     </SafeAreaProvider>
   );
@@ -73,8 +93,18 @@ function AppWeb() {
   const safeAreaInsets = useSafeAreaInsets();
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'blue' }}>
       {/* <WebView/ */}
+      <WebView
+        // source={{uri: 'http://192.168.3.127:3000'}}
+        // source={{uri: 'https://www.joinether.in/'}}
+        source={{ uri: 'http://192.168.3.66:5183/' }}
+        style={{ flex: 1, backgroundColor: 'green' }}
+        onMessage={event => {
+          const data = JSON.parse(event.nativeEvent.data);
+          console.log('WEBVIEW EVENT =>', data);
+        }}
+      />
     </SafeAreaView>
   );
 }
