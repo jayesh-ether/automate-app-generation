@@ -99,8 +99,8 @@ function AppWeb() {
       {/* <WebView/ */}
       <WebView
         // source={{uri: 'http://192.168.3.127:3000'}}
-        // source={{uri: 'https://www.joinether.in/'}}
-        source={{ uri: 'http://192.168.3.66:5183/' }}
+        source={{uri: 'https://www.joinether.in/'}}
+        // source={{ uri: 'http://192.168.3.66:5183/' }}
         style={{ flex: 1, backgroundColor: 'green' }}
         onMessage={event => {
           const data = JSON.parse(event.nativeEvent.data);
