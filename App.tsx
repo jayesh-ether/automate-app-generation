@@ -33,7 +33,7 @@ function App() {
 
       setData(result);
     } catch (err) {
-      setError(err.message);
+      setError(err instanceof Error ? err.message : String(err));
     } finally {
       setLoading(false);
     }
@@ -71,20 +71,22 @@ function App() {
 
   return (
     <SafeAreaProvider>
-      {/* <SafeAreaView> */}
+      <SafeAreaView style={{flex:1}}>
       {/* <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} /> */}
-      {/* <AppWeb /> */}
-      <WebView
-        // source={{uri: 'http://192.168.3.127:3000'}} // aashish ip
+      <AppContent />
+      {/* <WebView
+        source={{uri: 'http://192.168.3.55:8000'}} // aashish ip
+        // 192.168.3.55:8000
         // source={{uri: 'https://www.joinether.in/'}}
-        source={{ uri: 'http://192.168.3.66:5183/' }} // sanjeev ip
-        style={{ flex: 1, backgroundColor: 'green' }}
+        // source={{ uri: 'http://192.168.3.66:5183/' }} // sanjeev ip
+        style={{ flex: 1 }}
         onMessage={event => {
           const data = JSON.parse(event.nativeEvent.data);
           console.log('WEBVIEW EVENT =>', data);
         }}
-      />
+      /> */}
       {/* <Text>HAjasnjnsa</Text> */}
+      </SafeAreaView>
     </SafeAreaProvider>
   );
 }
